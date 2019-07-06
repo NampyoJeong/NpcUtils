@@ -24,3 +24,11 @@ fun Fragment.toast(@StringRes resId: Int) = context?.toast(resId)
 fun ViewGroup.inflate(@LayoutRes res: Int): View {
     return LayoutInflater.from(context).inflate(res, this, false)
 }
+
+fun String?.int(): Int = this?.toInt() ?: 0
+
+fun String?.long(): Long = this?.toLong() ?: 0
+
+fun String?.float(): Float = this?.toFloat() ?: 0.0f
+
+fun String?.double(): Double = this?.toDouble() ?: 0.0
