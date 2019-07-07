@@ -24,8 +24,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation project(path: ':kotlinUtils')
-    implementation project(path: ':roomutil')
+    implementation project(path: ':core')
+    implementation project(path: ':room')
 
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 

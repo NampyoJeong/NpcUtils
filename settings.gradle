@@ -1,1 +1,1 @@
-include ':app', ':kotlinUtils', ':roomutil'
+include ':app', ':core', ':room'
