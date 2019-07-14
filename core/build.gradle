@@ -2,6 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: "kotlin-kapt"
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 28
@@ -27,6 +28,16 @@ android {
     androidExtensions {
         experimental = true
     }
+}
+
+publish {
+    userOrg = BINTRAY_USER_NAME
+    groupId = PACKAGE_NAME
+    artifactId = 'core'
+    publishVersion = '0.0.1'
+    desc = REPOSITORY_URL
+    website = REPOSITORY_URL
+    repository = REPOSITORY_GIT
 }
 
 dependencies {
