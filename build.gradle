@@ -29,8 +29,12 @@ task clean(type: Delete) {
 }
 
 ext {
-    BINTRAY_USER_NAME = 'npc'
+    BINTRAY_USER_NAME = 'nampyojeong'
     PACKAGE_NAME = 'io.npc.util'
     REPOSITORY_URL = 'https://github.com/NampyoJeong/NpcUtils'
     REPOSITORY_GIT = 'https://github.com/NampyoJeong/NpcUtils.git'
+
+    compile_sdk_version = 28
+    target_sdk_version = 28
+    min_sdk_version = 19
 }

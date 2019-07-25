@@ -1,19 +1,32 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.novoda.bintray-release'
+
+ext {
+    publish_version = '0.0.1'
+}
+
+publish {
+    userOrg = rootProject.BINTRAY_USER_NAME
+    groupId = rootProject.PACKAGE_NAME
+    artifactId = 'util-coroutine'
+    publishVersion = publish_version
+    desc = rootProject.REPOSITORY_URL
+    website = rootProject.REPOSITORY_URL
+    repository = rootProject.REPOSITORY_GIT
+}
 
 android {
-    compileSdkVersion 28
-
+    compileSdkVersion rootProject.compile_sdk_version
 
     defaultConfig {
-        minSdkVersion 19
-        targetSdkVersion 28
+        minSdkVersion rootProject.min_sdk_version
+        targetSdkVersion rootProject.target_sdk_version
         versionCode 1
-        versionName "1.0"
+        versionName publish_version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
     }
 
     buildTypes {
