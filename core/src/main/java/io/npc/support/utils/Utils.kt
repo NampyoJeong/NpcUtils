@@ -56,3 +56,21 @@ fun String?.long(): Long = this?.toLong() ?: 0
 fun String?.float(): Float = this?.toFloat() ?: 0.0f
 
 fun String?.double(): Double = this?.toDouble() ?: 0.0
+
+fun String.getFileName(): String {
+    val index = lastIndexOf("/")
+    return if (index < 0 || index == length - 1) {
+        this
+    } else {
+        substring(index + 1)
+    }
+}
+
+fun String.getFileExtension(): String {
+    val index = lastIndexOf(".")
+    return if (index < 0 || index == length - 1) {
+        ""
+    } else {
+        substring(index + 1)
+    }
+}
