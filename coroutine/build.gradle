@@ -4,7 +4,8 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.novoda.bintray-release'
 
 ext {
-    publish_version = '0.0.2'
+    version_code = 3
+    publish_version = '0.0.3'
 }
 
 publish {
@@ -23,7 +24,7 @@ android {
     defaultConfig {
         minSdkVersion rootProject.min_sdk_version
         targetSdkVersion rootProject.target_sdk_version
-        versionCode 2
+        versionCode version_code
         versionName publish_version
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
