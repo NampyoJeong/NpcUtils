@@ -1,24 +1,21 @@
 package io.npc.support.util.coroutine
 
 import kotlinx.coroutines.*
+import kotlin.coroutines.CoroutineContext
 
 fun <T> launchOnMainThread(
     api: suspend () -> T,
     onSuccess: ((T) -> Unit)? = null,
-    onError: ((e: Exception) -> Unit)? = null
+    onError: ((e: Throwable) -> Unit)? = null,
+    context: CoroutineContext = Dispatchers.Default
 ) {
-    CoroutineScope(Dispatchers.Main).launch {
-        async { api() }.call(onSuccess, onError)
-    }
-}
-
-suspend fun <T> Deferred<T>.call(
-    onSuccess: ((T) -> Unit)? = null,
-    onError: ((e: Exception) -> Unit)? = null
-) {
-    try {
-        await().let { onSuccess?.invoke(it) }
-    } catch (e: Exception) {
+    val handler = CoroutineExceptionHandler { _, e ->
         onError?.invoke(e)
+    }
+
+    CoroutineScope(Dispatchers.Main).launch(handler) {
+        withContext(context) { api() }.let {
+            onSuccess?.invoke(it)
+        }
     }
 }
