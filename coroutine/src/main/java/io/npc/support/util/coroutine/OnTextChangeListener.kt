@@ -2,13 +2,8 @@ package io.npc.support.util.coroutine
 
 import android.text.Editable
 import android.text.TextWatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ObsoleteCoroutinesApi
-import kotlinx.coroutines.channels.actor
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 
-@ObsoleteCoroutinesApi
 class OnTextChangeListener(
     private val afterTextChanged: (s: Editable?) -> Unit,
     private val beforeTextChanged: ((s: CharSequence?, start: Int, count: Int, after: Int) -> Unit)? = null,
@@ -16,15 +11,23 @@ class OnTextChangeListener(
     private val timeMillis: Long = 200
 ) : TextWatcher {
 
-    private val actor = CoroutineScope(Dispatchers.Main).actor<Editable?> {
-        for (event in channel) {
-            afterTextChanged.invoke(event)
-            delay(timeMillis)
-        }
-    }
+    private var searchFor = ""
+
+    private var textChangedJob: Job? = null
 
     override fun afterTextChanged(s: Editable?) {
-        actor.offer(s)
+        val searchText = s.toString().trim()
+        if (searchText != searchFor) {
+            searchFor = searchText
+
+            textChangedJob?.cancel()
+            textChangedJob = CoroutineScope(Dispatchers.Main).launch {
+                delay(timeMillis)
+                if (searchText == searchFor) {
+                    afterTextChanged.invoke(s)
+                }
+            }
+        }
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
